@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Index</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"
+	integrity="sha512-OqcrADJLG261FZjar4Z6c4CfLqd861A3yPNMb+vRQ2JwzFT49WT4lozrh3bcKxHxtDTgNiqgYbEUStzvZQRfgQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+	<div class="container" id="container">
+		<h3 class="text-center mt-5">Html2Canvas</h3>
+		<a href="/">Back to Home</a>
+		<div class="mt-3" id="post">
+			<h3>New Post</h3>
+			<div class="mb-3" id="newPost">
+				<textarea class="form-control" id="content"></textarea>
+			</div>
+			<input id="btn-Preview-Post" type="button" value="Post Preview"
+				class="btn btn-primary" /> 
+			<input id="btn-Clear-Preview-Post"
+				type="button" value="Clear Preview" class="btn btn-secondary " />
+			<div id="previewPost" class="mt-1"></div>
+		</div>
+	</div>
+</body>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script>
+	$(document).ready(
+			function() {
+				var newPost = $("#container");
+				var getPostcanvas;				
+				$("#btn-Preview-Post").on('click', function (){
+					//remove existing canvas
+					$("#previewPost").empty();
+					html2canvas(newPost, {
+						//adding option
+						logging : true,
+						backgroundColor:"red",
+					}).then(function(canvas){
+						$("#previewPost").append(canvas);
+						getPostcanvas = canvas;
+					})
+				})				
+				$("#btn-Convert-Html2Image").on(
+						'click',
+						function() {
+							var imgageData = getCanvas.toDataURL("image/png");
+							var newData = imgageData.replace(
+									/^data:image\/png/,
+									"data:application/octet-stream");
+							$("#btn-Convert-Html2Image").attr("download",
+									"your_pic_name.png").attr("href", newData);
+						});
+				$("#btn-Clear-Preview-Post").on(
+						'click',
+						function(){
+							$("#previewPost").empty();
+						})
+			});
+</script>
+</html>
