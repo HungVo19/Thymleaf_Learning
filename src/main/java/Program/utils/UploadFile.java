@@ -23,11 +23,12 @@ public class UploadFile {
 	}
 
 	public static String uploadImage(MultipartFile file) throws IOException {
+		Files.createDirectories(Paths.get(Constants.UPLOAD_IMG_DIR_OTHER));
 		String name = Objects.requireNonNull(file.getOriginalFilename()).substring(0,file.getOriginalFilename().lastIndexOf("."))
 				+ System.currentTimeMillis() + ".jpg";
-		Path fileNameAndPath = Paths.get(Constants.UPLOAD_IMG_DIR, name);
+		Path fileNameAndPath = Paths.get(Constants.UPLOAD_IMG_DIR_OTHER, name);
 		Files.write(fileNameAndPath, file.getBytes(), StandardOpenOption.CREATE);
-		return fileNameAndPath.toString().substring(fileNameAndPath.toString().lastIndexOf("\\upload"));
+		return name;
 	}
 
 	public static String createPath(String fileName) {

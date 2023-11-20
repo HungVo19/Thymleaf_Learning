@@ -62,4 +62,10 @@ public class ProductController {
 		productService.deleteById(Long.valueOf(id));
 		return "redirect:/products";
 	}
+
+	@PutMapping("/{id}")
+	public String editProduct(@ModelAttribute("editProduct") Product product) {
+		Product editProduct = product;
+		return "redirect:/products";
+	}
 }
